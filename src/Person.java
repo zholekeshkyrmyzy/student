@@ -27,7 +27,6 @@ public class Person {
         return gender;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
@@ -46,7 +45,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "\nHi I am " + name + " " + surname  + "," +
+        return "\nHi I am " + name + " " + surname + "," +
                 "\na " + age + " year old" +
                 "\nGender: " + (gender ? "male" : "female");
     }
