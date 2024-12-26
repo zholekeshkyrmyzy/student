@@ -1,64 +1,42 @@
-public class Student {
-    private static int id = 1;
-    private int id_gen;
-    private String name;
-    private String surname;
-    private int age;
-    private boolean gender;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-    public Student() {
-        id_gen = id++;
-    }
-    public Student(String name, String surname){
-        this();
-        this.name = name;
-    }
+public class Student extends Person {
+    private int studentID;
+    private List<Integer> grades;
+
     public Student(String name, String surname, int age, boolean gender) {
-        this(name, surname);
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.gender = gender;
+        super(name, surname, age, gender);
+        this.studentID = new Random().nextInt(9000) + 1000;
+        this.grades = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public int getStudentID() {
+        return studentID;
     }
 
-    public String getSurname() {
-        return surname;
+    public void addGrade(int grade) {
+        if (grade >= 0 && grade <= 100) {
+            grades.add(grade);
+        } else {
+            throw new IllegalArgumentException("between 0 and 100.");
+        }
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
+    public double calculateGPA() {
+        if (grades.isEmpty()) {
+            return 0;
+        }
+        int sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        return sum / (double) grades.size();
     }
 
     @Override
     public String toString() {
-        return "Student id: " + id_gen +
-                "\nHi I am " + name + " " + surname  + "," +
-                "\na " + age + "year old" +
-                "\nGender: " + (gender ? "male" : "female");
+        return super.toString() + " I am a student with ID " + studentID + ".";
     }
 }
