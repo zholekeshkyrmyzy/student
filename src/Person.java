@@ -1,52 +1,81 @@
-public class Person {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Person implements Payable, Comparable<Person> {
+    private static int idCounter = 0;
+    private final int id;
     private String name;
     private String surname;
-    private int age;
-    private boolean gender;
 
-    public Person(String name, String surname, int age, boolean gender) {
+    public Person() {
+        this.id = ++idCounter;
+        this.name = "Unknown";
+        this.surname = "Unknown";
+    }
+
+    public Person(String name, String surname) {
+        this.id = ++idCounter;
         this.name = name;
         this.surname = surname;
-        this.age = age;
-        this.gender = gender;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
 
     @Override
     public String toString() {
-        return "\nHi I am " + name + " " + surname + "," +
-                "\na " + age + " year old" +
-                "\nGender: " + (gender ? "male" : "female");
+        return id + ". " + name + " " + surname;
     }
+
+    public String getPosition() {
+        return "Student";
+    }
+
+    @Override
+    public double getPaymentAmount() {
+        return 0.0;
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return Double.compare(this.getPaymentAmount(), other.getPaymentAmount());
+    }
+
+    public static void main(String[] args) {
+
+        Employee employee1 = new Employee("John", "Lennon", "Manager", 27045.78);
+        Employee employee2 = new Employee("George", "Harrison", "Developer", 50000.00);
+        Student student1 = new Student("Ringo", "Starr", 2.5);
+        Student student2 = new Student("Paul", "McCartney", 3.5);
+
+        List<Person> people = new ArrayList<>();
+        people.add(employee1);
+        people.add(employee2);
+        people.add(student1);
+        people.add(student2);
+
+        Collections.sort(people);
+
+        MyApplication.printData(people);
+    }
+
 }
